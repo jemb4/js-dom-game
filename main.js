@@ -90,8 +90,8 @@ class Game {
   }
 
   handleWorldLoop() {
-    const maxWorldWidth = 1100
-    const maxWorldHeight = 900
+    const maxWorldWidth = 1000
+    const maxWorldHeight = 700
 
     this.wallRight.style.display = 'none';
     this.wallLeft.style.display = 'none';
@@ -175,8 +175,8 @@ class Player {
   constructor() {
     this.x = 455
     this.y = 245
-    this.width = 50
-    this.height = 50
+    this.width = 30
+    this.height = 30
     this.speed = 5
     this.jumping = false
 
