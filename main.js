@@ -2,6 +2,9 @@ class Game {
   constructor () {
     this.container = document.getElementById('game-container')
     this.scoreElement = document.getElementById('score')
+    this.endGame = document.getElementById('end-game')
+    this.blur = document.getElementById('blur')
+    this.restartBtn = document.getElementById('restart-game')
     this.player = null
     this.coins = []
     this.score = 0
@@ -9,6 +12,7 @@ class Game {
     this.worldOffsetX = 0
     this.worldOffsetY = 0
     this.moving = false
+    this.gameOver = false
 
     this.createScenario()
     this.addEvents()
@@ -34,7 +38,6 @@ class Game {
     this.darkness.id = 'darkness'
     this.container.appendChild(this.darkness)
 
-    // Posición inicial del ratón
     this.mouseX = 480
     this.mouseY = 270
 
@@ -44,7 +47,6 @@ class Game {
       this.mouseY = e.clientY - rect.top
     });
   }
-
     
   createWall(className) {
     const wall = document.createElement('div')
@@ -63,6 +65,8 @@ class Game {
       this.keys[e.key] = false
       this.moving = false
     })
+
+    this.restartBtn.addEventListener('click', () => this.restartGame())
     
     const update = () => {
       this.player.handleInput(this.keys, this)
@@ -73,11 +77,11 @@ class Game {
       this.updateFlashlight()
 
       // Activar si quieres ver en consola donde está el player
-      if (this.moving){
-        const playerX = -this.worldOffsetX + this.player.x
-        const playerY = -this.worldOffsetY + this.player.y
-        console.log(`Jugador en coordenadas del mundo: X=${playerX}, Y=${playerY}`)
-      }
+      // if (this.moving){
+      //   const playerX = -this.worldOffsetX + this.player.x
+      //   const playerY = -this.worldOffsetY + this.player.y
+      //   console.log(`Jugador en coordenadas del mundo: X=${playerX}, Y=${playerY}`)
+      // }
 
       requestAnimationFrame(update)
     }
@@ -153,9 +157,17 @@ class Game {
     })
   }
 
+  restartGame() {
+    location.reload()
+  }
+
   updateScore(score) {
     this.score += score
     this.scoreElement.textContent = `Puntos: ${this.score}`
+    if (this.score === 10){
+      this.blur.classList.toggle('hidden')
+      this.endGame.classList.toggle('hidden')
+    }
   }
 }
 
