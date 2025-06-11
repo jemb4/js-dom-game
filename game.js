@@ -14,7 +14,7 @@ class Game {
   gameConf() {
     this.container = document.getElementById('game-container')
     this.scoreElement = document.getElementById('score')
-    this.scoreValue = document.getElementById('score-value')
+    this.scoreValue = document.querySelector('ui-score')
 
     this.player = null
     this.coins = []
@@ -27,7 +27,13 @@ class Game {
     this.createWorld()
     this.createPlayer()
     this.createCoin(this.score)
+    this.createUI()
     this.createLight()
+  }
+
+  createUI() {
+    this.UI = new UI()
+    this.container.appendChild(this.UI.element)
   }
 
   createPlayer() {
@@ -77,12 +83,12 @@ class Game {
 
   update() {
       this.handleInput(this.keys, this)
-      // this.handleWorldLoop()
       this.checkCollisions()
       this.light.updateLight(this.player)
       this.updateCoins()
-      this.playerPosition() // Activar si quieres ver en consola donde está el player
       this.world.updateWorld(this.container)
+      this.updateCoinDistance()
+      this.playerPosition() // Activar si quieres ver en consola donde está el player
       
       requestAnimationFrame(() => this.update())
   }
@@ -91,9 +97,49 @@ class Game {
     this.coins.forEach(coin => coin.updatePosition())
   }
 
+  updateCoinDistance() {
+    const playerX = -this.world.worldOffsetX + this.player.x + this.player.width / 2
+    const playerY = -this.world.worldOffsetY + this.player.y + this.player.height / 2
+
+    let closestDistance = Infinity
+
+    this.coins.forEach(coin => {
+      const coinX = coin.x + coin.width / 2
+      const coinY = coin.y + coin.height / 2
+
+      const dx = playerX - coinX
+      const dy = playerY - coinY
+      const distance = Math.sqrt(dx * dx + dy * dy)
+
+
+      if (distance < closestDistance) {
+        closestDistance = distance
+      }
+    })
+
+    if (this.coins.length === 0) {
+      this.UI.messageBox.textContent = 'No coins left!'
+      this.UI.messageBox.style.color = 'white'
+      return
+    }
+
+    const rounded = Math.round(closestDistance)
+
+    if (closestDistance < 150) {
+      this.UI.messageBox.style.color = 'lime'
+    } else if (closestDistance < 350) {
+      this.UI.messageBox.style.color = 'gold'
+    } else {
+      this.UI.messageBox.style.color = 'lightcoral'
+  }
+
+    this.UI.messageBox.textContent = `Closest coin: ${rounded}px`
+    this.UI.messageBox.textContent = `Closest coin: ${Math.round(closestDistance)}`
+  }
+
   updateScore() {
     this.score--
-    this.scoreValue.textContent = this.score
+    this.UI.scoreBox.textContent = `Remain: ${this.score}`
   }
 
   checkCollisions() {
@@ -107,7 +153,6 @@ class Game {
       }
     })
   }
-
 
   playerPosition() {
       if (this.player.moving){

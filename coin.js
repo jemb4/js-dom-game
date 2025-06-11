@@ -7,7 +7,7 @@ export class Coin {
   }
 
   coinConf() {
-    // this.x = Math.random() * (1555 + 645) - 645
+    // this.x = Math.random() * (1500 + 645) - 645
     // this.y = Math.random() * (1145 + 655) - 655
     this.x = Math.random() * 100
     this.y = Math.random() * 100
