@@ -11,16 +11,30 @@ body {
 }
 
 #game-container {
-  position: relative;
   width: 960px;
   height: 540px;
-  margin: 20px auto;
-  border: 10px solid #6d6d6d;
-  background-image: repeating-linear-gradient(
-    0deg, #d0eaff, #d0eaff 50px, #ffffff 50px, #ffffff 100px
-  );
+  position: relative;
   overflow: hidden;
-  border-radius: 30px;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.1) 5px, transparent 5px),
+    linear-gradient(to bottom, rgba(255,255,255,0.1) 5px, transparent 5px);
+  background-size: 60px 60px, 60px 60px;
+}
+
+.vertical-wall {
+  position: absolute;
+  width: 1000px;
+  height: 540px;
+  background-color: red;
+  z-index: 5;
+}
+
+.horizontal-wall {
+  position: absolute;
+  width: 960px;
+  height: 1000px;       
+  background-color: red;
+  z-index: 5;
 }
 
 .player {
@@ -45,22 +59,6 @@ body {
   font-size: 20px;
   text-align: center;
   margin: 10px 0;
-}
-
-.wall-vertical {
-  position: absolute;
-  width: 50px;
-  height: 540px;
-  background-color: black;
-  z-index: 10;
-}
-
-.wall-horizontal {
-  position: absolute;
-  width: 960px;
-  height: 50px;
-  background-color: black;
-  z-index: 10;
 }
 
 #darkness {

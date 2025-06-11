@@ -15,9 +15,6 @@ class Game {
     this.container = document.getElementById('game-container')
     this.scoreElement = document.getElementById('score')
     this.scoreValue = document.getElementById('score-value')
-    this.endGame = document.getElementById('end-game')
-    this.blur = document.getElementById('blur')
-    this.restartBtn = document.getElementById('restart-game')
 
     this.player = null
     this.coins = []
@@ -56,8 +53,6 @@ class Game {
 
   addEvents() {
     this.listenerEvents()
-    this.restartGame()
-
     this.update()
   }
 
@@ -80,17 +75,13 @@ class Game {
     });
   }
 
-  restartGame() {
-    this.restartBtn.addEventListener('click', () => this.restartGame())
-  }
-
   update() {
       this.handleInput(this.keys, this)
       // this.handleWorldLoop()
       this.checkCollisions()
       this.light.updateLight(this.player)
       this.updateCoins()
-      // this.playerPosition() // Activar si quieres ver en consola donde está el player
+      this.playerPosition() // Activar si quieres ver en consola donde está el player
       this.world.updateWorld(this.container)
       
       requestAnimationFrame(() => this.update())
@@ -127,10 +118,25 @@ class Game {
   }
 
   handleInput(keys) {
-    if (keys['ArrowRight'] || keys['d'] ) this.world.worldOffsetX -= this.player.speed;
-    if (keys['ArrowLeft'] || keys['a']) this.world.worldOffsetX += this.player.speed;
-    if (keys['ArrowUp'] || keys['w']) this.world.worldOffsetY += this.player.speed;
-    if (keys['ArrowDown'] || keys['s']) this.world.worldOffsetY -= this.player.speed;
+  const input = {
+    x: 0,
+    y: 0,
+  }
+
+  if (keys['ArrowRight'] || keys['d']) input.x -= this.player.speed
+  if (keys['ArrowLeft'] || keys['a']) input.x += this.player.speed
+  if (keys['ArrowUp'] || keys['w']) input.y += this.player.speed
+  if (keys['ArrowDown'] || keys['s']) input.y -= this.player.speed
+
+  const nextX = this.world.worldOffsetX + input.x
+  const nextY = this.world.worldOffsetY + input.y
+
+  // Limits
+  if (nextX < -1000 || nextX > 1000) input.x = 0
+  if (nextY < -1000 || nextY > 1000) input.y = 0
+
+  this.world.worldOffsetX += input.x
+  this.world.worldOffsetY += input.y
   }
 }
 
