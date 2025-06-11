@@ -14,13 +14,14 @@ class Game {
   gameConf() {
     this.container = document.getElementById('game-container')
     this.scoreElement = document.getElementById('score')
+    this.scoreValue = document.getElementById('score-value')
     this.endGame = document.getElementById('end-game')
     this.blur = document.getElementById('blur')
     this.restartBtn = document.getElementById('restart-game')
 
     this.player = null
     this.coins = []
-    this.score = 0
+    this.score = 3
     this.keys = {}
     this.gameOver = false
   }
@@ -28,7 +29,7 @@ class Game {
   createScenario() {
     this.createWorld()
     this.createPlayer()
-    this.createCoin(3)
+    this.createCoin(this.score)
     this.createLight()
   }
 
@@ -86,7 +87,6 @@ class Game {
   update() {
       this.handleInput(this.keys, this)
       // this.handleWorldLoop()
-      // this.updateWorldObjects()
       this.checkCollisions()
       this.light.updateLight(this.player)
       this.updateCoins()
@@ -100,9 +100,23 @@ class Game {
     this.coins.forEach(coin => coin.updatePosition())
   }
 
-  checkCollisions() {
-
+  updateScore() {
+    this.score--
+    this.scoreValue.textContent = this.score
   }
+
+  checkCollisions() {
+    this.coins.forEach((coin, index) => {
+      const collided = this.player.collisionWith(coin, this.world.worldOffsetX, this.world.worldOffsetY)
+      
+      if (collided) {
+        this.container.removeChild(coin.element)
+        this.coins.splice(index, 1)
+        this.updateScore()
+      }
+    })
+  }
+
 
   playerPosition() {
       if (this.player.moving){
