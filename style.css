@@ -10,23 +10,47 @@ body {
   flex-direction: column;
 }
 
+.container {
+  padding: 10px;
+  border-radius: 30px;
+  background-color: #07a050;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
 #game-container {
-  position: relative;
   width: 960px;
   height: 540px;
-  margin: 20px auto;
-  border: 10px solid #6d6d6d;
-  background-image: repeating-linear-gradient(
-    0deg, #d0eaff, #d0eaff 50px, #ffffff 50px, #ffffff 100px
-  );
+  position: relative;
   overflow: hidden;
-  border-radius: 30px;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.1) 5px, transparent 5px),
+    linear-gradient(to bottom, rgba(255,255,255,0.1) 5px, transparent 5px);
+  background-size: 60px 60px, 60px 60px;
+  cursor: none;
+  border-radius: 20px;
+  background-color: #6b6060fa;
+}
+
+.vertical-wall {
+  position: absolute;
+  width: 1000px;
+  height: 540px;
+  background-color: black;
+  z-index: 5;
+}
+
+.horizontal-wall {
+  position: absolute;
+  width: 960px;
+  height: 1000px;       
+  background-color: black;
+  z-index: 5;
 }
 
 .player {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-color: #07a07c;
   border-radius: 50%;
   border: 5px solid #07a050;
@@ -47,22 +71,6 @@ body {
   margin: 10px 0;
 }
 
-.wall-vertical {
-  position: absolute;
-  width: 50px;
-  height: 540px;
-  background-color: black;
-  z-index: 10;
-}
-
-.wall-horizontal {
-  position: absolute;
-  width: 960px;
-  height: 50px;
-  background-color: black;
-  z-index: 10;
-}
-
 #darkness {
   position: absolute;
   width: 100%;
@@ -71,10 +79,56 @@ body {
   left: 0;
   pointer-events: none;
   z-index: 9;
-  background: radial-gradient(
-    circle 150px at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
-  transition: background-position 0.05s linear;
+  background: rgba(0, 0, 0, 0.95);
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  transition: mask-image 0.05s linear;
+}
+
+
+.UI {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 95%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 20;
+  pointer-events: none;
+}
+
+#ui-score {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+}
+
+.ui-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ui-message {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+.coin-ui {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  transition: color 0.2s ease;
 }
