@@ -25,8 +25,8 @@ body {
 
 .player {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   background-color: #07a07c;
   border-radius: 50%;
   border: 5px solid #07a050;
@@ -71,12 +71,9 @@ body {
   left: 0;
   pointer-events: none;
   z-index: 9;
-  background: radial-gradient(
-    circle 150px at 50% 50%,
-    transparent 0%,
-    rgba(0, 0, 0, 0.95) 100%
-  );
-  transition: background-position 0.05s linear;
+  background: rgba(0, 0, 0, 0.95);
+  clip-path: none; /* se aplicará desde JS */
+  transition: clip-path 0.05s linear;
 }
 
 #end-game {
