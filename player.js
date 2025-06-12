@@ -2,7 +2,6 @@ export class Player {
   constructor() {
     this.playerConf()
     this.createPlayer()
-    this.updatePosition()
   }
 
   playerConf() {
@@ -17,9 +16,6 @@ export class Player {
   createPlayer() {
     this.element = document.createElement('div')
     this.element.classList.add('player')
-  }
-  
-  updatePosition() {
     this.element.style.left = `${this.x}px`
     this.element.style.top = `${this.y}px`
   }

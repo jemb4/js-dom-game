@@ -1,6 +1,7 @@
 export class Light {
   constructor(container) {
     this.lightConf(container)
+    this.lightHanddle(container)
   }
 
   lightConf(container) {
@@ -11,6 +12,15 @@ export class Light {
     this.mouseX = 480
     this.mouseY = 270
   }
+
+  lightHanddle(container) {
+      container.addEventListener('mousemove', (e) => {
+      const rect = container.getBoundingClientRect()
+      this.mouseX = e.clientX - rect.left
+      this.mouseY = e.clientY - rect.top
+      console.log(this.playerCenterX)
+    });
+  }
   
   updateLight(player) {
   const playerCenterX = player.x + player.width / 2
@@ -19,8 +29,8 @@ export class Light {
   const dx = this.mouseX - playerCenterX
   const dy = this.mouseY - playerCenterY
 
-  const flashlightX = playerCenterX + dx * 0.7
-  const flashlightY = playerCenterY + dy * 0.7
+  const flashlightX = playerCenterX + dx 
+  const flashlightY = playerCenterY + dy
 
   this.darkness.style.background = `radial-gradient(
     circle 150px at ${flashlightX}px ${flashlightY}px,

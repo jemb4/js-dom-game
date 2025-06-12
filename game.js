@@ -62,6 +62,7 @@ class Game {
   addEvents() {
     this.listenerEvents()
     this.update()
+    this.light.lightHanddle()
   }
 
   listenerEvents() {
@@ -74,13 +75,6 @@ class Game {
       this.keys[e.key] = false
       this.player.moving = false
     })
-
-    this.container.addEventListener('mousemove', (e) => {
-      const rect = this.container.getBoundingClientRect()
-      this.light.mouseX = e.clientX - rect.left
-      this.light.mouseY = e.clientY - rect.top
-      console.log(this.mouseX)
-    });
   }
 
   update() {
