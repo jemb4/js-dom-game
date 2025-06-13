@@ -4,6 +4,8 @@ import GameSettings from "../config/GameSettings.js"
 export class UIController {
 
     init() {
-        UIEntity.initUI(GameSettings.score)
+        UIEntity.initUI(GameSettings.maxScore)
     }
+
+    
 }

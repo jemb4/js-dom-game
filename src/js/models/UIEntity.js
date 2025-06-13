@@ -9,7 +9,7 @@ export class UIEntity {
   static initUI(score) {
     this.addUI()
     this.addRemainBox(score)
-    this.addCoinBox()
+    this.addCoinColumn()
     return this;
   }
 
@@ -23,23 +23,35 @@ export class UIEntity {
   static addRemainBox(score) {
     this.scoreBox = document.createElement("div");
     this.scoreBox.setAttribute("id", "ui-score");
-    this.scoreBox.textContent = `Remain: ${score}`;
+    this.scoreBox.textContent = `Remain: 3`;
 
     this.uiElement.appendChild(this.scoreBox)
   }
 
-  static addCoinBox() {
+  static addCoinColumn() {
     this.rightColumn = document.createElement('div')
     this.rightColumn.classList.add('ui-right-column')
 
+    this.coinBoxes = new Map()
     this.uiElement.appendChild(this.rightColumn)
+  }
+
+  static addCoinUI (coinID) {
+    const coinBox = document.createElement
+    coinBox.classList.add('coin-ui')
+    coinBox.dataset.coinID = coinID
+    coinBox.textContent = `Coin ${coinID}: calculating...`
+
+    this.rightColumn.appendChild(coinBox)
+    this.coinBoxes.set(coinID, coinBox)
   }
 
   /**
    * 
    */
-  static setScoreBox(coinsQuantity) {
-    console.log('10');
-    
+  static setScoreBox(score) {
+    if (this.scoreBox) {
+      this.scoreBox.textContent = `Remain: ${score}`
+    }
   }
 }
