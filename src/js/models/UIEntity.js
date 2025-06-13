@@ -6,9 +6,9 @@ export class UIEntity {
   /**
    *
    */
-  static initUI() {
+  static initUI(score) {
     this.addUI()
-    this.addRemainBox()
+    this.addRemainBox(score)
     this.addCoinBox()
     return this;
   }
@@ -20,10 +20,10 @@ export class UIEntity {
     this.container.appendChild(this.uiElement)    
   }
 
-  static addRemainBox() {
+  static addRemainBox(score) {
     this.scoreBox = document.createElement("div");
     this.scoreBox.setAttribute("id", "ui-score");
-    this.scoreBox.textContent = "Remain: 3";
+    this.scoreBox.textContent = `Remain: ${score}`;
 
     this.uiElement.appendChild(this.scoreBox)
   }
